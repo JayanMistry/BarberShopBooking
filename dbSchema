@@ -1,0 +1,71 @@
+
+----------------------------------------------------
+
+-----
+--  Example: participant_id: 12345
+-----
+create table customers(
+    customer_id  serial    primary key  not null,
+    customer_phone_number  text not null,
+    customer_first_name    text not null,
+    customer_last_name     text not null
+
+);
+
+
+-----
+--  Example: participant_id: 12345
+-----
+create table customer_missed_appointment(
+    customer_id  serial    primary key  not null,
+    number_missed_appointments int  not null
+);
+
+
+-----
+--  Example: clinician_id: 54321
+-----
+create table hairdressers(
+    hairdresser_id    serial   primary key  not null,
+    hairdresser_first_name    text not null,
+    hairdresser_last_name     text not null,
+    phonenumber	    text     not null
+
+);
+
+
+----------------------------------------------------
+-- Localisation Presets
+--
+----------------------------------------------------
+
+
+
+create table haircut_style(
+    id          serial not null primary key,
+    name        text   not null
+);
+
+create table haircut_style_details(
+    haircut_style_id            int     references haircut_style(id),
+    name                        text    ,
+    details                     text,    
+    price                       decimal(12,2),
+    primary key (haircut_style_id)
+);
+
+
+
+-----
+--  Example: test_id: 1111, participant_id: 12345, clinician_id: 54321
+-----
+create table appointment(
+    appointmentid   serial      primary key  not null,
+    date            date  not null,
+    start_time      time,
+    end_time        time,            
+    customer_id     smallint    references customers(customer_id) not null,
+    haircut_style_id    int  references haircut_style_details(haircut_style_id) not null
+);
+
+
